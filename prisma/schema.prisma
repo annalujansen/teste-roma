@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    url      = env("DATABASE_URL")
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([name])
+}
+
+model Cliente {
+    telefone String   @id
+    nome     String
+    cpf      String?
+    endereco String
+    local_id Int   
+    local    Local    @relation(fields: [local_id], references: [local_id])
+    pedido   Pedido[] @relation("ClientePedido")
+}
+
+enum StatusPedido {
+  pendente
+  entregue
+  cancelado
+}
+
+enum FormaPagamento {
+    dinheiro
+    cartao
+    pix
+    pendente
+}
+
+enum Turno {
+    almoco
+    jantar
+}
+
+model Pedido {
+    pedido_id         Int             @id @default(autoincrement())
+    status            StatusPedido    @default(pendente)
+    telefone_cliente  String //fk para cliente
+    data_hora         DateTime        @default(now())
+    local_id          Int             //fk para local
+    observacao        String?
+    turno             Turno
+    forma_pagamento   FormaPagamento  @default(cartao)
+    endereco          String
+    pedidoCardapio    PedidoCardapio[]
+    cliente           Cliente         @relation(fields: [telefone_cliente], references: [telefone], name: "ClientePedido")
+    local             Local           @relation(fields: [local_id], references: [local_id], name: "LocalPedido")
+}
+
+model PedidoCardapio {
+    pedido_id   Int     //fk para pedido
+    codigo_item String //fk para item
+    observacao  String?
+    quantidade  Int     @default(1)
+    pedido      Pedido  @relation(fields: [pedido_id], references: [pedido_id])
+    item        Item    @relation(fields: [codigo_item], references: [codigo_item])
+
+    @@id([pedido_id, codigo_item])
+}
+
+model Item {
+    codigo_item    String           @id
+    nome_item      String
+    preco          Float
+    pedidoCardapio PedidoCardapio[]
+}
+
+model Local {
+    local_id Int      @id @default(autoincrement())
+    bairro   String
+    taxa     Float
+    cliente  Cliente[]
+    pedido   Pedido[] @relation("LocalPedido")
+}
+
+model Variavel {
+    nome  String @id
+    valor String
+}
