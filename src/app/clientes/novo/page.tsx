@@ -4,8 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-// CORREÇÃO #1: Usar 'import type' para os tipos
-import type { CriarClienteData, Local } from "~/lib/clientes";
+import type { CriarClienteData } from "~/lib/clientes";
 import {
     criarClienteSchema,
     formatTelefoneBR,
@@ -27,7 +26,6 @@ export default function CriarCliente() {
     });
     const [formError, setFormError] = useState<string | null>(null);
     
-    // CORREÇÃO #2: O caminho correto é 'api.local', não 'api.locais'
     const locaisQuery = api.local.getAllLocais.useQuery();
 
     const createClienteMutation = api.cliente.createCliente.useMutation({

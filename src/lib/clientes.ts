@@ -3,7 +3,8 @@ import { z } from "zod";
 // ------- Tipos de Dados -------
 export type Local = {
     local_id: number;
-    nome: string;
+    bairro: string;
+    taxa: number;
 };
 
 export type Cliente = {

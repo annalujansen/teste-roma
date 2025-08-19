@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export interface LocalType {
+    nome: string;
     local_id: number;
     bairro: string;
     taxa: number;

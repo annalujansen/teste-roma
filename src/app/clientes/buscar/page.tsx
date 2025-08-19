@@ -1,7 +1,6 @@
 "use client";
 
 import { Search, Loader2 } from "lucide-react";
-// Adicione a importação do useEffect
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { buscarClienteSchema, formatTelefoneBR } from '~/lib/clientes';
@@ -9,7 +8,7 @@ import { api } from '~/trpc/react';
 
 export default function BuscarCliente() {
     const router = useRouter();
-    const [telefone, setTelefone] = useState("");
+    const [telefone, setTelefone] = useState<string>("");
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     // 1. A chamada ao useQuery agora é mais simples, sem os callbacks
@@ -57,7 +56,6 @@ export default function BuscarCliente() {
             return;
         }
 
-        // Apenas chamamos o refetch. O useEffect cuidará do resultado.
         refetch();
     }
 
