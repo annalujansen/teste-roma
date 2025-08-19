@@ -90,22 +90,29 @@ export default function CadastroPedidoPage() {
             return;
         }
 
-        createPedidoMutation.mutate({
+        const dadosParaAPI = {
             telefone_cliente: telefone,
             endereco: pedidoDetails.enderecoEntrega,
             local_id: pedidoDetails.local_id as number,
             turno: pedidoDetails.turno as "almoco" | "jantar",
-            forma_pagamento: "dinheiro", // Valor padrão, pode ser alterado depois
+            forma_pagamento: "dinheiro" as const, // Valor padrão, pode ser alterado depois
             observacao: pedidoDetails.observacao,
-            status: 'pendente',
-            data_hora: new Date(),
+            
+            status: 'pendente' as const, // Define o status inicial
+            data_hora: new Date(),     // Envia a data e hora atuais
+            
             itens: itensDoPedido.map(item => ({
                 codigo_item: item.codigo_item,
                 quantidade: item.quantidade,
                 observacao: item.observacao,
             })),
-        });
+        };
+
+        console.log("Enviando para a API:", dadosParaAPI); 
+
+        createPedidoMutation.mutate(dadosParaAPI);
     };
+
     
     if (!telefone) {
         return (

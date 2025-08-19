@@ -29,7 +29,7 @@ export default function InfoCliente({ cliente, locais, pedidoDetails, onPedidoDe
           <label className="font-semibold">Nome</label>
           <input
             type="text"
-            className="border border-[#E2E8F0] rounded-md p-2 bg-white"
+            className="border border-[#E2E8F0] rounded-md p-2 bg-white font-semibold"
             value={cliente.nome}
             disabled
           />
@@ -47,7 +47,7 @@ export default function InfoCliente({ cliente, locais, pedidoDetails, onPedidoDe
           <label className="font-semibold">Endereço Fixo</label>
           <input
             type="text"
-            className="border border-[#E2E8F0] rounded-md p-2 bg-white"
+            className="border border-[#E2E8F0] rounded-md p-2 bg-white text-gray-500"
             value={cliente.endereco}
             disabled
           />
